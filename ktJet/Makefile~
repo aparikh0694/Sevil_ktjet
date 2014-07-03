@@ -1,0 +1,129 @@
+######################
+
+CXX           = g++
+LD            = g++
+
+#############################
+
+os = $(shell uname -s)
+
+-include config.mk
+
+
+PYTHIA8=$(PYTHIA8DIR)
+FASTJET=$(FASTJETDIR)
+CGAL=$(CGALDIR)
+HIJING=$(HOME)/thijing-1.6
+
+
+
+ifeq ($(os),Linux)
+CXXFLAGS      = -I$(ROOTSYS)/include
+else
+CXXFLAGS      = -m64 -O2 -pthread -W -Woverloaded-virtual -D_REENTRANT -g -c -pipe -Wall -dynamiclib -I$(ROOTSYS)/include
+endif
+
+ifeq ($(FASTJETSUPPORT),yes)
+CXXFLAGS     += -I$(FASTJET)/include  -I$(FASTJET)/include/fastjet/tools
+endif
+ifeq ($(PYTHIA8SUPPORT),yes)
+CXXFLAGS     += -I$(PYTHIA8)/include
+endif
+ifeq ($(STARSUPPORT),yes)
+CXXFLAGS     += -I$/$(STARPICODIR)
+endif
+ifeq ($(HIJINGSUPPORT),yes)
+CXXFLAGS     += -I$(HIJING)/include
+endif
+
+
+ifeq ($(os),Linux)
+LDFLAGS       = -m64 -g
+LDFLAGSS      = -m64 -g --shared
+else
+LDFLAGS       = -O2 -Xlinker -bind_at_load -flat_namespace -m64 -g
+LDFLAGSS      = -dynamiclib -flat_namespace -undefined suppress
+LDFLAGSSS     = -bundle
+endif
+
+ROOTLIBS      = $(shell root-config --libs)
+
+LIBS          =  $(ROOTLIBS)
+ifeq ($(FASTJETSUPPORT),yes)
+#LIBS         += -L$(FASTJET)/lib -lfastjet -lSISConePlugin -lsiscone  -lsiscone_spherical
+LIBS         += -L$(FASTJET)/lib -lfastjet -lfastjetplugins -lfastjettools -lsiscone  -lsiscone_spherical	
+# CGAL support ...
+ifeq ($(USECGAL),yes)
+LIBS         += -L$(CGAL)/lib -lCGAL -lCGALcore++
+endif
+endif
+ifeq ($(PYTHIA8SUPPORT),yes)
+LIBS	     += -L$(PYTHIA8)/lib/archive/ -lpythia8 -llhapdfdummy
+endif
+ifeq ($(STARSUPPORT),yes)
+LIBS	     += -L$(STARPICODIR) -lTStarJetPico
+endif
+ifeq ($(HIJINGSUPPORT),yes)
+LIBS	     += -L$(HIJING)/lib -lTHijing
+endif
+
+HDRS          = ktJet.h ktJetCell.h ktPseudoJet.h ktJetCellPair.h ktGrid.h ktNN.h ktParton.h ktMuEvent.h ktMuJet.h ktMCBkg.h ktPy8Event.h ktPID.h ktParticle.h ktAna.h ktJetQuench.h ktUEEvent.h ktTriggerInfo.h
+SRCS          = main.C dict.C ktJet.C ktJetCell.C ktPseudoJet.C ktJetCellPair.C ktGrid.C ktNN.C ktParton.C ktMuEvent.C ktMuJet.C ktMCBkg.C ktPy8Event.C ktPID.C ktParticle.C ktAna.C ktJetQuench.C ktUEEvent.C ktTriggerInfo.C
+
+HDRS         += ktMuFastJet.h
+SRCS         += ktMuFastJet.C
+
+
+ifeq ($(FASTJETSUPPORT),yes)
+HDRS         += ktFastJet.h 
+SRCS         += ktFastJet.C 
+endif
+
+ifeq ($(PYTHIA8SUPPORT),yes)
+HDRS         += ktPythia8.h
+SRCS         += ktPythia8.C
+endif
+
+ifeq ($(HIJINGSUPPORT),yes)
+HDRS         += ktHijing.h
+SRCS         += ktHijing.C
+endif
+
+ifeq ($(TRIGGERPATCH),yes)
+HDRS         += ktTrigger.h 
+HDRS         += ktTriggerPatch.h
+SRCS         += ktTrigger.C
+SRCS         += ktTriggerPatch.C
+endif
+
+ifeq ($(STARSUPPORT),yes)
+HDRS         += ktStarPico.h
+SRCS         += ktStarPico.C
+endif
+
+OBJS          = $(SRCS:.C=.o)
+
+PROGRAM       = ktroot
+SLIB          = libKtJet.so
+
+$(PROGRAM):     $(OBJS)
+	@echo "Linking $(PROGRAM) for "$(os)
+	@echo $(LD) $(LDFLAGSS) $(OBJS) $(LIBS) -o $(SLIB)
+	@echo $(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o $(PROGRAM)
+	@$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o $(PROGRAM)
+	@$(LD) $(LDFLAGSS) $(OBJS) $(LIBS) -o $(SLIB)
+	@echo "done"
+
+##########################################################
+
+ktJet.o: ktJet.h
+
+dict.C: $(HDRS)
+	@echo "Generating dictionary ..."
+	@$(ROOTSYS)/bin/rootcint -f dict.C -c -I$(PYTHIA8)/include -I$(STARPICODIR) -I${HIJING}/include $(HDRS)
+.C.o:
+	$(CXX) $(CXXFLAGS) -c $<
+
+clean :
+	rm -f *.o dict*.* $(PROGRAM) $(SLIB)
+	@echo "All cleaned-up :-)"

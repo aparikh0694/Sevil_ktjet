@@ -1,0 +1,341 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/software/!svn/ver/650/ktJet
+END
+ktFastJet.C
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/643/ktJet/ktFastJet.C
+END
+configure
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/431/ktJet/configure
+END
+make_html.C
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/264/ktJet/make_html.C
+END
+ktJetCellPair.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/software/!svn/ver/2/ktJet/ktJetCellPair.h
+END
+ktParticle.C
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/software/!svn/ver/366/ktJet/ktParticle.C
+END
+ktParton.C
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/software/!svn/ver/2/ktJet/ktParton.C
+END
+ktAna.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/software/!svn/ver/560/ktJet/ktAna.h
+END
+ktMuFastJet.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/software/!svn/ver/512/ktJet/ktMuFastJet.h
+END
+ktPseudoJet.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/2/ktJet/ktPseudoJet.h
+END
+ktHijing.C
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/software/!svn/ver/422/ktJet/ktHijing.C
+END
+ktTrigger.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/2/ktJet/ktTrigger.h
+END
+ktNN.C
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/software/!svn/ver/2/ktJet/ktNN.C
+END
+ktUEEvent.C
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/640/ktJet/ktUEEvent.C
+END
+ktPID.C
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/software/!svn/ver/389/ktJet/ktPID.C
+END
+ktTriggerInfo.C
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/software/!svn/ver/638/ktJet/ktTriggerInfo.C
+END
+ktJet.C
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/software/!svn/ver/156/ktJet/ktJet.C
+END
+main.C
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/software/!svn/ver/2/ktJet/main.C
+END
+ktJetQuench.C
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/software/!svn/ver/529/ktJet/ktJetQuench.C
+END
+ktPy8Event.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/software/!svn/ver/381/ktJet/ktPy8Event.h
+END
+ktJetCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/370/ktJet/ktJetCell.h
+END
+ktTriggerPatch.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/software/!svn/ver/2/ktJet/ktTriggerPatch.h
+END
+ktMCBkg.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/227/ktJet/ktMCBkg.h
+END
+ktMuEvent.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/524/ktJet/ktMuEvent.h
+END
+ktStarPico.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/software/!svn/ver/509/ktJet/ktStarPico.h
+END
+ktMuJet.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/387/ktJet/ktMuJet.h
+END
+ktGrid.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/software/!svn/ver/156/ktJet/ktGrid.h
+END
+ktPythia8.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/265/ktJet/ktPythia8.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/software/!svn/ver/650/ktJet/Makefile
+END
+backup.sh
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/101/ktJet/backup.sh
+END
+ktJetCellPair.C
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/software/!svn/ver/2/ktJet/ktJetCellPair.C
+END
+ktAna.C
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/software/!svn/ver/560/ktJet/ktAna.C
+END
+ktMuFastJet.C
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/software/!svn/ver/512/ktJet/ktMuFastJet.C
+END
+ktPseudoJet.C
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/2/ktJet/ktPseudoJet.C
+END
+ktTrigger.C
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/2/ktJet/ktTrigger.C
+END
+ktFastJet.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/530/ktJet/ktFastJet.h
+END
+ktParticle.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/software/!svn/ver/388/ktJet/ktParticle.h
+END
+ktParton.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/software/!svn/ver/2/ktJet/ktParton.h
+END
+clean.sh
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/software/!svn/ver/5/ktJet/clean.sh
+END
+ktAreaUtil.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/software/!svn/ver/244/ktJet/ktAreaUtil.h
+END
+ktHijing.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/software/!svn/ver/422/ktJet/ktHijing.h
+END
+ktNN.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/software/!svn/ver/2/ktJet/ktNN.h
+END
+ktTrackSimUtil.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/software/!svn/ver/475/ktJet/ktTrackSimUtil.h
+END
+ktUEEvent.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/442/ktJet/ktUEEvent.h
+END
+ktPID.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/software/!svn/ver/389/ktJet/ktPID.h
+END
+ktJetCell.C
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/371/ktJet/ktJetCell.C
+END
+ktPy8Event.C
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/software/!svn/ver/381/ktJet/ktPy8Event.C
+END
+ktMuEvent.C
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/491/ktJet/ktMuEvent.C
+END
+ktMCBkg.C
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/398/ktJet/ktMCBkg.C
+END
+ktTriggerPatch.C
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/software/!svn/ver/2/ktJet/ktTriggerPatch.C
+END
+ktMuJet.C
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/software/!svn/ver/395/ktJet/ktMuJet.C
+END
+ktStarPico.C
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/software/!svn/ver/544/ktJet/ktStarPico.C
+END
+ktTriggerInfo.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/software/!svn/ver/639/ktJet/ktTriggerInfo.h
+END
+ktGrid.C
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/software/!svn/ver/423/ktJet/ktGrid.C
+END
+ktPythia8.C
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/software/!svn/ver/381/ktJet/ktPythia8.C
+END
+ktJet.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/software/!svn/ver/156/ktJet/ktJet.h
+END
+ktJetQuench.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/software/!svn/ver/529/ktJet/ktJetQuench.h
+END

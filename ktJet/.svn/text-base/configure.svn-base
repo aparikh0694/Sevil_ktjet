@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+# Configuration script, for ktJet to be run before compilation
+#
+
+# Default values
+export PYTHIA8SUPPORT=yes
+export FASTJETSUPPORT=yes
+export TRIGGERPATCH=no
+export STARPICO=yes
+export USECGAL=yes;
+export HIJINGSUPPORT=no
+
+for arg in $* ; do
+  if [ "x$arg" = "x--disable-FastJet" ] ; then
+    FASTJETSUPPORT=no
+  elif [ "x$arg" = "x--disable-Pythia8" ] ; then
+    PYTHIA8SUPPORT=no
+  elif [ "x$arg" = "x--disable-Trigger" ] ; then
+    TRIGGERPATCH=no
+  elif [ "x$arg" = "x--enable-Pythia8" ] ; then
+    PYTHIA8SUPPORT=yes
+  elif [ "x$arg" = "x--enable-FastJet" ] ; then
+    FASTJETSUPPORT=yes
+  elif [ "x$arg" = "x--enable-Trigger" ] ; then
+    TRIGGERPATCH=yes
+  elif [ "x$arg" = "x--enable-Star" ] ; then
+    STARPICO=yes
+  elif [ "x$arg" = "x--enable-CGAL" ] ; then
+      USECGAL=yes  
+  elif [ "x$arg" = "x--enable-HIJING" ] ; then
+     HIJINGSUPPORT=yes  
+  elif [ "x$arg" = "x--help" ] ; then
+    echo "" \
+    "\nUsage: ./configure [options] , where options are:\n\n"\
+    "--help            : prints this help\n"\
+    "--disable-Pythia8 : (enable) turns off/on Pythia8 interface\n"\
+    "--disable-FastJet : (enable) turns off/on FastJet support \n"\
+    "--disable-Trigger : (enable) turns off/on TriggerPatch support \n"\
+    "--disable-Star    : (enable) turns off/on Star JetPico support \n"\
+    "--disable-CGAL    : (enable) turns off/on CGAL support for FastJet \n"
+    exit
+   else
+      echo "${arg}: wrong option. Ignored." >&2
+    fi
+done
+
+echo ""
+echo "Configure settings:"
+echo "-------------------"
+echo FastJet support      = $FASTJETSUPPORT
+echo Pythia8 interface    = $PYTHIA8SUPPORT
+echo Trigger Patch        = $TRIGGERPATCH
+echo Star JetPico support = $STARPICO
+echo Use CGAL             = $USECGAL 
+echo HIJING interface     = $HIJINGSUPPORT
+rm -f config.mk
+
+echo PYTHIA8SUPPORT = ${PYTHIA8SUPPORT} > config.mk
+echo FASTJETSUPPORT = ${FASTJETSUPPORT} >> config.mk
+echo TRIGGERPATCH   = ${TRIGGERPATCH} >> config.mk
+echo STARSUPPORT   = ${STARPICO} >> config.mk
+echo USECGAL = ${USECGAL} >> config.mk
+echo HIJINGSUPPORT = ${HIJINGSUPPORT} >> config.mk
+echo ""
+make clean
+echo ""

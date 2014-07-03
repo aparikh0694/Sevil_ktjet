@@ -1,0 +1,226 @@
+void kt_fastjet_phi_bkg(Int_t nEvents=1,TString mfName="test_fj_out.root")
+{
+  gROOT->Reset();
+  gROOT->Clear();
+
+  // ktJet lib
+  if (gClassTable->GetID("ktJet") < 0) {
+    cout<<"Load ktJet lib ..."<<endl;
+    gSystem->Load("libKtJet.so");
+  }
+
+  cout<<endl;
+  cout<<" Test FastJet Interface (SISCone and CGAL)'"<<endl;
+  cout<<" -----------------------------------------"<<endl;
+  cout<<"      (Joern Putschke, 2008)"<<endl;
+  cout<<endl;
+
+  Int_t nEv=0;
+  Double_t mSeed=4.6;
+  Double_t mPtCut=0.2;
+  Double_t mPtCutMin=0.2;
+  Double_t mRc=0.4;
+  Double_t mRcFF=0.7;
+  Double_t mRcPycell=0.7;
+
+  Bool_t mMuWrite=false;
+
+  ktMCBkg *b=new ktMCBkg("RHIC","Au+Au",0.2);
+  //b->Setv2(0.25);
+  //b->SetdNdEta(2500);
+  b->SetOutput(false);
+
+  ktPythia8 *p=new ktPythia8("/Users/putschke/pythia8100/xmldoc");
+  p->SetVerbose(false);
+  p->InitPhaseSpace("28.0","32.0");
+  p->Init("RHIC");
+
+  ktMuEvent *ev=0;
+  ktMuEvent *evPy=0;
+
+  TFile *ffout=0;
+  TTree *outTree=0;
+
+  if (mMuWrite)
+    {
+      ffout=new TFile(mfName,"RECREATE");
+      outTree=new TTree("JSimuFJ","Jet event tree");
+      outTree->Branch("event",&ev);
+    }
+
+  ktFastJet *fastJet=new ktFastJet();
+  fastJet->SetFiducial(1,TMath::Pi());
+  fastJet->SetPtCut(mPtCut);
+  fastJet->SetInfo(true);
+  fastJet->SetPrintJet(false);
+  fastJet->SetFillFFArray(false);
+  fastJet->SetNJetsForFF(2);
+  fastJet->SetActiveAreaRepeats(1);
+  
+  /*
+  TH1F *hNEF=new TH1F("hNEF","",60,-0.5,1.5);
+  TH1F *hNEFpp=new TH1F("hNEFpp","",60,-0.5,1.5);
+  hNEFpp->SetLineStyle(2);
+  TH1F *hNEFAnti=new TH1F("hNEFAnti","",60,-0.5,1.5);
+  hNEFAnti->SetLineColor(2); 
+  TH1F *hNEFppAnti=new TH1F("hNEFppAnti","",60,-0.5,1.5);
+  hNEFppAnti->SetLineStyle(2);hNEFppAnti->SetLineColor(2);
+  */
+
+  if (b->Init())
+    {
+      do
+	{
+	  
+	  p->RunWithPycell();
+	  
+	  if (!(fabs(p->GetPycellEta())<(0.3) && p->GetPycellPhi2()<(TMath::Pi()-0.7) && p->GetPycellEt()>28.0 &&  p->GetPycellEt()<32.0)) continue;
+
+	  if (nEvents>10)
+	    if (fmod(nEv,nEvents/10)==0 && nEv>0)
+	      cout<<"Event number : "<<nEv<<endl;
+
+	  ev=new ktMuEvent(nEv);
+	  evPy=new ktMuEvent(nEv);
+	  
+	  nEv++;
+
+	  if (nEv<2)
+	    fastJet->PrintInfo();	  
+	  
+	  // Add Pythia jets ...
+	  fastJet->AddPythia8Event(p,"EMCAL");
+
+	  evPy->SetParticlePid("Simulation test Pythia");
+
+	  fastJet->RunFastJetSub(mRc,"kt",evPy);
+	  fastJet->RunFastJetSub(mRc,"AntiKt",evPy);
+
+	  // Add Background ...
+	  //cout<<p->GetPycellPhi()<<" "<<p->GetPycellPhi2()<<endl;
+
+	  //b->Fill(fastJet, p->GetPycellPhi2());
+	  Double_t mRP= gRandom->Uniform(-TMath::Pi(),TMath::Pi());
+	  cout<<mRP<<" "<<p->GetPycellPhi2()<<endl;
+	  b->Fill(fastJet,mRP);
+
+	  // Do FastJet analysis ...	  
+	  fastJet->DoBkg();
+	  //cout<<endl;
+
+	  fastJet->RunFastJetSub(mRc,"kt",ev);
+	  fastJet->RunFastJetSub(mRc,"AntiKt",ev);
+	  //fastJet->RunSISCone(mRc,ev);
+	  
+	  // Do FF ...
+	  /*
+	  fastJet->FillFF("SISCone",ev);
+	  fastJet->DoXiBkg("SISCone",ev);
+	  fastJet->FillFF("AntiKt",ev);
+	  fastJet->DoXiBkg("AntiKt",ev);
+	  fastJet->FillFF("kt",ev);		
+	  fastJet->DoXiBkg("kt",ev);
+	  */	  
+
+	  cout<<endl;
+	  fastJet->DoPhiBkg("kt",ev);
+	  //DEBUG:
+	  //cout<<fastJet->GetNPhiBkgHistos()<<endl;
+	  if (fastJet->GetNPhiBkgHistos()>0)
+	    {
+	      TCanvas *c0=new TCanvas("c0","Canvas #0",800,800);
+	      c0->Divide(2,2);
+	      htemp=(TH2D*) fastJet->GetPhiBkgHisto(0);
+	      c0->cd(1);
+	      htemp->DrawCopy("lego2");
+	      c0->cd(2);
+	      htemp->ProjectionY()->DrawCopy();
+	      c0->cd(3);
+	      htemp->ProjectionX()->DrawCopy();
+	    }
+
+	  ev->PrintJets(10);
+	  cout<<endl;
+	  evPy->PrintJets(10);
+	  cout<<endl;
+       
+	  /*
+	    if (mMuWrite)
+	    {
+		outTree->Fill();
+		}
+	  */
+
+	  /*
+	  // fill hisograms ...
+	  if (ev->GetNFJkt()>0 && evPy->GetNFJkt()>0)
+	    {
+	      j=(ktMuFastJet*) ev->GetFJkt(0);
+	      jpp=(ktMuFastJet*)  ev->GetFJkt(0);
+	      
+	      hNEF->Fill(j->GetNEFCorr());
+	      hNEFpp->Fill(jpp->GetNEF());
+	      
+	    }
+	  if (ev->GetNFJAntiKt()>0 && evPy->GetNFJAntiKt()>0)
+	    {
+	      j=(ktMuFastJet*) ev->GetFJAntiKt(0);
+	      jpp=(ktMuFastJet*)  ev->GetFJAntiKt(0);
+	      
+	      hNEFAnti->Fill(j->GetNEFCorr());
+	      hNEFppAnti->Fill(jpp->GetNEF());
+
+	    }
+	  */
+
+	  fastJet->Clear();
+	  
+	  delete ev;
+	  delete evPy;
+
+	  //gObjectTable->Print();
+	  
+	}
+      while (nEv<nEvents);
+    }
+  else
+    cout<<" Error :  MC bkg. not initialized !"<<endl;
+  
+  // Draw hiostograms ...
+  //hNEFpp->DrawCopy();hNEF->DrawCopy("same");hNEFAnti->DrawCopy("same");hNEFppAnti->DrawCopy("same");
+
+  /*
+  if (b->GetInitOK())
+    {
+      b->HistNorm(nEvents);
+      TCanvas *c1=new TCanvas("c1","Canvas #1",800,800);
+      c1->Divide(2,2);
+      c1->cd(1);b->heta->DrawCopy();
+      c1->cd(2);b->hpt->SetMinimum(0.001);
+      //TF1 *mfit=new TF1("mfit","[0]*exp(-x/[1])",0.1,5);mfit->SetParameters(1,0.3);
+      //b->hpt->Fit(mfit,"QR");
+      b->hpt->DrawCopy();gPad->SetLogy();
+
+      c1->cd(3);b->hphi->DrawCopy();
+      if (b->Getv2()>0)
+	{
+	  c1->cd(4);b->hRP->DrawCopy();
+	}
+    }
+  */
+
+  if (mMuWrite)
+    {
+       ffout->Write();
+       ffout->Close();
+    }
+
+  delete fastJet;
+  delete p;
+  delete b;
+
+  cout<<endl;
+  cout<<"Done :-)"<<endl;
+  cout<<endl;
+
+}

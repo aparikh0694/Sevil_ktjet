@@ -1,0 +1,142 @@
+
+#include "ktMuFastJet.h"
+#include <Riostream.h>
+
+ClassImp(ktMuFastJet)
+
+ktMuFastJet::ktMuFastJet()
+{
+
+  // set default values for completeness !!!
+  pt=eta=phi=etaCorr=phiCorr=-99;
+  median_pt_per_area=area=-99;
+  median_pt_per_area_charged=area=-99;
+  median_pt_per_area_neutral=area=-99;
+  area=areaError=0;
+  NEF=-99;
+  type="TBD";
+
+  //JetParticles=new TObjArray(0);
+  //JetParticles->SetOwner(kTRUE);
+
+  FFAreaInAcc=0.0;
+  hpt=0;
+  isTrigger=false;
+
+  // DEBUG:
+  //cout<<"Default ktMuFastJet constructor "<<endl;
+}
+
+ktMuFastJet::ktMuFastJet(Double_t mpt,Double_t meta,Double_t mphi,Double_t mMedian, Double_t marea)
+{
+  pt=mpt; eta=meta; phi=mphi; median_pt_per_area=mMedian; area=marea;
+  phiCorr=mphi;etaCorr=meta;
+  FFAreaInAcc=0.0;
+  median_pt_per_area_charged=-99;
+  median_pt_per_area_neutral=-99;
+  areaError=0;
+  NEF=-99;
+
+  JetParticles=new TObjArray(0);
+  JetParticles->SetOwner(kTRUE);
+
+  hpt=0;
+  isTrigger=false;
+}
+
+
+ktMuFastJet::ktMuFastJet(Double_t mpt,Double_t meta,Double_t mphi,Double_t mMedian, Double_t marea,TString mtype)
+{
+  pt=mpt; eta=meta; phi=mphi; median_pt_per_area=mMedian; area=marea;
+  phiCorr=mphi;etaCorr=meta;
+  type=mtype;
+  FFAreaInAcc=0.0;
+  median_pt_per_area_charged=-99;
+  median_pt_per_area_neutral=-99;
+  areaError=0;
+  NEF=-99;
+
+  JetParticles=new TObjArray(0);
+  JetParticles->SetOwner(kTRUE);
+
+  hpt=0;
+  isTrigger=false;
+}
+
+ktMuFastJet::ktMuFastJet(Double_t mpt,Double_t meta,Double_t mphi,Double_t metaCorr,Double_t mphiCorr,Double_t mMedian, Double_t marea)
+{
+  pt=mpt; eta=meta; phi=mphi; median_pt_per_area=mMedian; area=marea;
+  phiCorr=mphiCorr;etaCorr=metaCorr;
+  FFAreaInAcc=0.0;
+  median_pt_per_area_charged=-99;
+  median_pt_per_area_neutral=-99;
+  areaError=0;
+  NEF=-99;
+
+  JetParticles=new TObjArray(0);
+  JetParticles->SetOwner(kTRUE);
+
+  hpt=0;
+  isTrigger=false;
+}
+
+ktMuFastJet::ktMuFastJet(Double_t mpt,Double_t meta,Double_t mphi,Double_t metaCorr,Double_t mphiCorr,Double_t mMedian, Double_t marea,TString mtype)
+{
+  pt=mpt; eta=meta; phi=mphi; median_pt_per_area=mMedian; area=marea;
+  phiCorr=mphiCorr;etaCorr=metaCorr;
+  type=mtype;
+  FFAreaInAcc=0.0;
+  median_pt_per_area_charged=-99;
+  median_pt_per_area_neutral=-99;
+  areaError=0;
+  NEF=-99;
+
+  JetParticles=new TObjArray(0);
+  JetParticles->SetOwner(kTRUE);
+
+  hpt=0;
+  isTrigger=false;
+}
+
+
+ktMuFastJet::~ktMuFastJet()
+{
+
+  // DEBUG:
+  //cout<<"Default ktMuFastJet destructor"<<endl;
+
+  //cout<<"Jet part ..."<<endl;
+  JetParticles->Delete();
+  //cout<<"->Delete() done"<<endl;
+  delete JetParticles;
+
+  delete hpt;
+
+}
+
+void ktMuFastJet::AddJetParticle(ktParticle *mP)
+{
+  // DEBUG:
+  //cout<<"Add ktParticle ..."<<endl;
+
+  ktParticle *p=new ktParticle(mP);
+  JetParticles->AddLast(p);
+}
+
+
+void ktMuFastJet::PrintJet()
+{
+  cout<<endl;
+  cout<<"FastJet jet info:"<<endl;
+  cout<<"-----------------"<<endl;
+  cout<<"Pt = "<<Pt()<<endl;
+  cout<<"PtCorr = "<<PtCorr()<<endl;
+  cout<<"eta = "<<Eta()<<endl;
+  cout<<"phi = "<<Phi()<<endl;
+  cout<<"area = "<<Area()<<endl;
+  cout<<"MedianPtPerArea = "<<MedianPtPerArea()<<endl;
+  cout<<"Type = "<<type<<endl;
+  cout<<"# FF particles = "<< GetNJetParticles()<<endl;
+  cout<<"FF area in Acc = "<< FFAreaInAcc <<endl;
+  cout<<endl;
+}
