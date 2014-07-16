@@ -1,6 +1,7 @@
 #ifndef ROOT_ktFastJet
 #define ROOT_ktFastJet
 
+#include "TArray.h"
 #include "TObject.h"
 #include "TBuffer.h"
 #include "TObjArray.h"

@@ -3,19 +3,17 @@
 CXX           = g++
 LD            = g++
 
-#############################
+######################
 
 os = $(shell uname -s)
 
 -include config.mk
 
 
-PYTHIA8=$(PYTHIA8DIR)
-FASTJET=$(FASTJETDIR)
-CGAL=$(CGALDIR)
-HIJING=$(HOME)/thijing-1.6
-
-
+PYTHIA8=/cvmfs/cms.cern.ch/slc5_amd64_gcc462/external/pythia8/153-cms5
+FASTJET=/cvmfs/cms.cern.ch/slc5_amd64_gcc462/external/fastjet/3.0.1
+CGAL=/cvmfs/cms.cern.ch/slc5_amd64_gcc462/external/cgal/4.2
+#HIJING=$(HOME)/thijing-1.6
 
 ifeq ($(os),Linux)
 CXXFLAGS      = -I$(ROOTSYS)/include
@@ -32,9 +30,9 @@ endif
 ifeq ($(STARSUPPORT),no)
 CXXFLAGS     += -I$/$(STARPICODIR)
 endif
-ifeq ($(HIJINGSUPPORT),no)
-CXXFLAGS     += -I$(HIJING)/include
-endif
+#ifeq ($(HIJINGSUPPORT),no)
+#CXXFLAGS     += -I$(HIJING)/include
+#endif
 
 
 ifeq ($(os),Linux)
@@ -63,9 +61,9 @@ endif
 ifeq ($(STARSUPPORT),yes)
 LIBS	     += -L$(STARPICODIR) -lTStarJetPico
 endif
-ifeq ($(HIJINGSUPPORT),yes)
-LIBS	     += -L$(HIJING)/lib -lTHijing
-endif
+#ifeq ($(HIJINGSUPPORT),yes)
+#LIBS	     += -L$(HIJING)/lib -lTHijing
+#endif
 
 HDRS          = ktJet.h ktJetCell.h ktPseudoJet.h ktJetCellPair.h ktGrid.h ktNN.h ktParton.h ktMuEvent.h ktMuJet.h ktMCBkg.h ktPy8Event.h ktPID.h ktParticle.h ktAna.h ktJetQuench.h ktUEEvent.h ktTriggerInfo.h
 SRCS          = main.C dict.C ktJet.C ktJetCell.C ktPseudoJet.C ktJetCellPair.C ktGrid.C ktNN.C ktParton.C ktMuEvent.C ktMuJet.C ktMCBkg.C ktPy8Event.C ktPID.C ktParticle.C ktAna.C ktJetQuench.C ktUEEvent.C ktTriggerInfo.C
@@ -84,10 +82,10 @@ HDRS         += ktPythia8.h
 SRCS         += ktPythia8.C
 endif
 
-ifeq ($(HIJINGSUPPORT),yes)
-HDRS         += ktHijing.h
-SRCS         += ktHijing.C
-endif
+#ifeq ($(HIJINGSUPPORT),yes)
+#HDRS         += ktHijing.h
+#SRCS         += ktHijing.C
+#endif
 
 ifeq ($(TRIGGERPATCH),yes)
 HDRS         += ktTrigger.h 
@@ -120,7 +118,7 @@ ktJet.o: ktJet.h
 
 dict.C: $(HDRS)
 	@echo "Generating dictionary ..."
-	@$(ROOTSYS)/bin/rootcint -f dict.C -c -I$(PYTHIA8)/include -I$(STARPICODIR) -I${HIJING}/include $(HDRS)
+	@$(ROOTSYS)/bin/rootcint -f dict.C -c -I$(PYTHIA8)/include -I$(STARPICODIR) $(HDRS)
 .C.o:
 	$(CXX) $(CXXFLAGS) -c $<
 
